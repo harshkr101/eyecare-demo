@@ -1,4 +1,3 @@
-import blog from "../models/blog";
 import Blog from "../models/blog";
 import { Request, Response } from "express";
 
@@ -49,8 +48,8 @@ export const getBlog = async (req: Request, res: Response) => {
 
 export const updateBlog = async (req: Request, res: Response) => {
   try {
-    const data: Blog = req.body.data;
-    const id = req.body.id;
+    const data: Blog = req.body;
+    const id = req.params.id;
     if (!data || !id) {
       res.status(400).end();
     }
@@ -93,8 +92,9 @@ export const deleteBlog = async (req: Request, res: Response) => {
 // GET all blogs
 export const getBlogs = async (req: Request, res: Response) => {
   try {
-    const blogs: Blog[] = await Blog.find({}).sort("createdAt");
-    if (blog.length > 0) {
+    // get all blogs sorted by creation time in descending order
+    const blogs: Blog[] = await Blog.find({}).sort({ createdAt: -1 });
+    if (blogs.length > 0) {
       res.status(200).json({ data: blogs });
     } else {
       res.status(404).end();
