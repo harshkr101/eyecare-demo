@@ -28,7 +28,7 @@ export const Blogs: React.FC = () => {
                   <Card.Title className="text-center">
                     <a href={"/blog/" + blog._id}>{blog.title}</a>
                   </Card.Title>
-                  <Card.Text>{blog.content}</Card.Text>
+                  <Card.Text>{blog.content.substring(0, 150)}...</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
