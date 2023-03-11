@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Card } from "react-bootstrap";
 import { Blog } from "../interfaces";
 import { useParams } from "react-router";
@@ -13,17 +13,17 @@ export const BlogView: React.FC = () => {
     author: "",
   });
   const { id } = useParams();
-  const getBlog = useCallback(async () => {
-    const res = await fetch(`${API_URL}/blog/${id}`);
-    if (res.ok) {
-      const blogs = await res.json();
-      setBlog(blogs.data);
-    }
-  }, [blog]);
 
   useEffect(() => {
+    const getBlog = async () => {
+      const res = await fetch(`${API_URL}/blog/${id}`);
+      if (res.ok) {
+        const blogs = await res.json();
+        setBlog(blogs.data);
+      }
+    };
     getBlog();
-  }, [getBlog]);
+  }, [id]);
 
   return (
     <div className="wrapper">
